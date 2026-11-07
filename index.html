@@ -1,13 +1,284 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR" data-theme="light">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Finora | Suas Finanças em Equilíbrio</title>
-    <script type="module" src="/src/main.ts" defer></script>
+    <meta name="theme-color" content="#f4f7f5" />
+    <meta
+      name="description"
+      content="Organize suas despesas, acompanhe sua renda e mantenha suas finanças em equilíbrio com o Finora."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:site_name" content="Finora" />
+    <meta property="og:title" content="Finora | Suas finanças em equilíbrio" />
+    <meta
+      property="og:description"
+      content="Um jeito simples e pessoal de acompanhar sua renda e suas despesas."
+    />
+    <meta property="og:image" content="./logo.webp" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Finora | Suas finanças em equilíbrio" />
+    <meta
+      name="twitter:description"
+      content="Um jeito simples e pessoal de acompanhar sua renda e suas despesas."
+    />
+    <meta name="twitter:image" content="./logo.webp" />
+    <link rel="icon" type="image/webp" href="./logo.webp" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="./src/styles/theme.css" />
+    <link rel="stylesheet" href="./src/styles/base.css" />
+    <link rel="stylesheet" href="./src/styles/layout.css" />
+    <link rel="stylesheet" href="./src/styles/components.css" />
+    <link rel="stylesheet" href="./src/styles/responsive.css" />
+    <title>Finora | Suas finanças em equilíbrio</title>
+    <script type="module" src="./src/main.ts"></script>
   </head>
   <body>
-    
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="topbar__inner">
+          <a class="brand" href="./" aria-label="Finora, início">
+            <img class="brand__logo" src="./logo.webp" alt="" width="56" height="56" />
+            <span class="brand__copy">
+              <span class="brand__name">finora<span class="brand__period">.</span></span>
+              <span class="brand__tagline">Suas finanças em equilíbrio</span>
+            </span>
+          </a>
+          <div class="topbar__actions">
+            <span class="topbar__note">Um olhar mais leve sobre o seu dinheiro.</span>
+            <button
+              class="theme-toggle"
+              id="theme-toggle"
+              type="button"
+              aria-label="Ativar tema escuro"
+              aria-pressed="false"
+            >
+              <i class="fa-solid fa-moon" aria-hidden="true"></i>
+              <span class="theme-toggle__label">Tema escuro</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <div class="dashboard">
+        <aside class="sidebar" aria-label="Resumo financeiro">
+          <section class="panel income-panel" aria-labelledby="income-title">
+            <div class="section-heading section-heading--compact">
+              <span class="section-heading__icon" aria-hidden="true">
+                <i class="fa-solid fa-wallet"></i>
+              </span>
+              <h2 id="income-title">Renda mensal</h2>
+            </div>
+            <label class="sr-only" for="monthly-income">Sua renda mensal em reais</label>
+            <div class="income-input">
+              <span class="income-input__currency" aria-hidden="true">R$</span>
+              <input
+                id="monthly-income"
+                name="monthly-income"
+                type="text"
+                inputmode="decimal"
+                placeholder="0,00"
+                autocomplete="off"
+              />
+              <button class="icon-button income-input__save" type="button" aria-label="Salvar renda">
+                <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
+              </button>
+            </div>
+            <p class="field-hint">O valor que você recebe por mês.</p>
+          </section>
+
+          <section class="metric-grid" aria-label="Indicadores financeiros">
+            <article class="metric-card metric-card--balance">
+              <span class="metric-card__icon" aria-hidden="true">
+                <i class="fa-solid fa-seedling"></i>
+              </span>
+              <div>
+                <p class="metric-card__label">Saldo restante</p>
+                <p class="metric-card__value">R$ 0,00</p>
+              </div>
+              <span class="metric-card__caption">depois das despesas</span>
+            </article>
+            <article class="metric-card">
+              <span class="metric-card__icon metric-card__icon--muted" aria-hidden="true">
+                <i class="fa-solid fa-receipt"></i>
+              </span>
+              <div>
+                <p class="metric-card__label">Total de despesas</p>
+                <p class="metric-card__value">R$ 0,00</p>
+              </div>
+              <span class="metric-card__caption">neste mês</span>
+            </article>
+          </section>
+
+          <section class="panel categories-panel" aria-labelledby="categories-title">
+            <div class="section-heading section-heading--compact">
+              <span class="section-heading__icon" aria-hidden="true">
+                <i class="fa-solid fa-chart-pie"></i>
+              </span>
+              <h2 id="categories-title">Gastos por categoria</h2>
+            </div>
+            <div class="category-chart" role="img" aria-label="Gráfico de despesas por categoria, sem dados">
+              <div class="category-chart__center">
+                <i class="fa-solid fa-leaf" aria-hidden="true"></i>
+                <span>Visão geral</span>
+              </div>
+            </div>
+            <ul class="category-legend" aria-label="Categorias de despesas">
+              <li><span class="category-dot category-dot--food"></span><span>Alimentação</span><strong>R$ 0,00</strong></li>
+              <li><span class="category-dot category-dot--transport"></span><span>Transporte</span><strong>R$ 0,00</strong></li>
+              <li><span class="category-dot category-dot--health"></span><span>Saúde</span><strong>R$ 0,00</strong></li>
+              <li><span class="category-dot category-dot--study"></span><span>Estudo</span><strong>R$ 0,00</strong></li>
+              <li><span class="category-dot category-dot--leisure"></span><span>Lazer</span><strong>R$ 0,00</strong></li>
+              <li><span class="category-dot category-dot--home"></span><span>Contas de casa</span><strong>R$ 0,00</strong></li>
+              <li><span class="category-dot category-dot--other"></span><span>Outros</span><strong>R$ 0,00</strong></li>
+            </ul>
+          </section>
+
+          <aside class="sidebar-note">
+            <i class="fa-solid fa-quote-left" aria-hidden="true"></i>
+            <p>Pequenos passos de hoje constroem a tranquilidade de amanhã.</p>
+          </aside>
+        </aside>
+
+        <main class="main-content">
+          <section class="panel add-panel" aria-labelledby="add-title">
+            <div class="section-heading">
+              <span class="section-heading__icon section-heading__icon--filled" aria-hidden="true">
+                <i class="fa-solid fa-plus"></i>
+              </span>
+              <div>
+                <h1 id="add-title">Adicionar despesa</h1>
+                <p class="section-description">Registre um gasto e mantenha tudo em perspectiva.</p>
+              </div>
+            </div>
+            <form class="expense-form" id="expense-form">
+              <div class="form-field form-field--title">
+                <label for="expense-title">Título da despesa</label>
+                <input id="expense-title" name="title" type="text" placeholder="Ex.: Conta de luz" />
+              </div>
+              <div class="form-field">
+                <label for="expense-category">Categoria</label>
+                <select id="expense-category" name="category">
+                  <option value="" selected disabled>Escolha uma</option>
+                  <option value="Alimentação">Alimentação</option>
+                  <option value="Transporte">Transporte</option>
+                  <option value="Saúde">Saúde</option>
+                  <option value="Estudo">Estudo</option>
+                  <option value="Lazer">Lazer</option>
+                  <option value="Contas de casa">Contas de casa</option>
+                  <option value="Outros">Outros</option>
+                </select>
+              </div>
+              <div class="form-field form-field--amount">
+                <label for="expense-amount">Valor</label>
+                <div class="amount-input">
+                  <span aria-hidden="true">R$</span>
+                  <input
+                    id="expense-amount"
+                    name="amount"
+                    type="number"
+                    min="0.01"
+                    step="0.01"
+                    placeholder="0,00"
+                    inputmode="decimal"
+                  />
+                </div>
+              </div>
+              <button class="button button--primary expense-form__submit" type="submit">
+                <i class="fa-solid fa-plus" aria-hidden="true"></i>
+                <span>Adicionar despesa</span>
+              </button>
+            </form>
+          </section>
+
+          <section class="panel expense-panel" aria-labelledby="expenses-title">
+            <div class="list-summary" aria-live="polite">
+              <div class="list-summary__copy">
+                <span class="list-summary__icon" aria-hidden="true"><i class="fa-solid fa-list-ul"></i></span>
+                <p><strong>0 despesas</strong><span class="list-summary__separator">·</span><span>0 em aberto</span></p>
+              </div>
+              <button class="button button--quiet refresh-button" type="button">
+                <i class="fa-solid fa-rotate" aria-hidden="true"></i>
+                <span>Atualizar lista</span>
+              </button>
+            </div>
+
+            <div class="expense-toolbar">
+              <div class="section-heading section-heading--list">
+                <span class="section-heading__icon" aria-hidden="true">
+                  <i class="fa-solid fa-wallet"></i>
+                </span>
+                <div>
+                  <h2 id="expenses-title">Suas despesas</h2>
+                  <p class="section-description">Acompanhe seus gastos, sem perder o fio da meada.</p>
+                </div>
+              </div>
+              <div class="filters" aria-label="Pesquisar e filtrar despesas">
+                <label class="search-field">
+                  <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                  <span class="sr-only">Buscar por título</span>
+                  <input type="search" name="search" placeholder="Buscar despesa..." />
+                </label>
+                <label class="sr-only" for="filter-category">Filtrar por categoria</label>
+                <select id="filter-category" name="filter-category">
+                  <option value="">Todas as categorias</option>
+                  <option value="Alimentação">Alimentação</option>
+                  <option value="Transporte">Transporte</option>
+                  <option value="Saúde">Saúde</option>
+                  <option value="Estudo">Estudo</option>
+                  <option value="Lazer">Lazer</option>
+                  <option value="Contas de casa">Contas de casa</option>
+                  <option value="Outros">Outros</option>
+                </select>
+                <label class="sr-only" for="filter-status">Filtrar por estado de pagamento</label>
+                <select id="filter-status" name="filter-status">
+                  <option value="">Todos os estados</option>
+                  <option value="paga">Pagas</option>
+                  <option value="em-aberto">Em aberto</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="expense-list" id="expense-list" aria-live="polite">
+              <div class="empty-state">
+                <span class="empty-state__art" aria-hidden="true">
+                  <i class="fa-solid fa-mug-hot"></i>
+                  <span class="empty-state__spark empty-state__spark--one"></span>
+                  <span class="empty-state__spark empty-state__spark--two"></span>
+                </span>
+                <h3>Tudo tranquilo por aqui</h3>
+                <p>Suas despesas aparecerão aqui. Comece registrando o primeiro gasto.</p>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+
+      <footer class="footer">
+        <p>Feito com cuidado para você cuidar melhor do seu dinheiro.</p>
+        <div class="footer__author">
+          <span>Desenvolvido por <strong>Bruno Januário</strong></span>
+          <a href="https://www.linkedin.com/in/bruno-januario/" target="_blank" rel="noreferrer" aria-label="LinkedIn de Bruno Januário">
+            <i class="fa-brands fa-linkedin-in" aria-hidden="true"></i>
+          </a>
+          <a href="https://github.com/bruno-januario" target="_blank" rel="noreferrer" aria-label="GitHub de Bruno Januário">
+            <i class="fa-brands fa-github" aria-hidden="true"></i>
+          </a>
+        </div>
+      </footer>
+    </div>
   </body>
 </html>
