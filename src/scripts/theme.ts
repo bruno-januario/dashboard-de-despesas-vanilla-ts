@@ -1,4 +1,5 @@
 const themeToggle = document.querySelector<HTMLButtonElement>("#theme-toggle");
+const THEME_STORAGE_KEY = "finora:theme:v1";
 
 if (!themeToggle) {
   throw new Error("O controle de tema não foi encontrado.");
@@ -25,7 +26,27 @@ const setTheme = (theme: "light" | "dark") => {
   }
 };
 
+let savedTheme: string | null = null;
+try {
+  savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+} catch (error) {
+  console.error("Falha ao carregar a preferência de tema.", error);
+}
+
+if (savedTheme === "light" || savedTheme === "dark") {
+  setTheme(savedTheme);
+} else if (savedTheme !== null) {
+  console.error("A preferência de tema salva tem um valor inválido.");
+}
+
 themeToggle.addEventListener("click", () => {
   const currentTheme = document.documentElement.dataset.theme;
-  setTheme(currentTheme === "dark" ? "light" : "dark");
+  const nextTheme = currentTheme === "dark" ? "light" : "dark";
+  setTheme(nextTheme);
+
+  try {
+    localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+  } catch (error) {
+    console.error("Falha ao salvar a preferência de tema.", error);
+  }
 });
