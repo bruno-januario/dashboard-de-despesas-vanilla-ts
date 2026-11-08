@@ -184,6 +184,12 @@
   }
 }
 
+@media (max-width: 449.99px) {
+  .refresh-button span {
+    display: none;
+  }
+}
+
 
 @media (max-width: 420px) {
   .topbar__inner,
@@ -244,7 +250,7 @@
   }
 
   .list-summary {
-    align-items: flex-start;
+    align-items: center;
   }
 
   .list-summary p {
