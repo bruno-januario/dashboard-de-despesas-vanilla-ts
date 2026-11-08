@@ -26,3 +26,8 @@ export type Despesa = {
   valor: number;
   estadoPagamento: EstadoPagamento;
 };
+
+export type DadosFinanceiros = {
+  rendaMensal: number;
+  despesas: Despesa[];
+};

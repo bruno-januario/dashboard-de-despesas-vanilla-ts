@@ -97,7 +97,9 @@
                 <i class="fa-solid fa-floppy-disk" aria-hidden="true"></i>
               </button>
             </div>
-            <p class="field-hint">O valor que você recebe por mês.</p>
+            <p class="field-hint" id="income-feedback" aria-live="polite">
+              O valor que você recebe por mês.
+            </p>
           </section>
 
           <section class="metric-grid" aria-label="Indicadores financeiros">
@@ -107,7 +109,7 @@
               </span>
               <div>
                 <p class="metric-card__label">Saldo restante</p>
-                <p class="metric-card__value">R$ 0,00</p>
+                <p class="metric-card__value" id="remaining-balance">R$ 0,00</p>
               </div>
               <span class="metric-card__caption">depois das despesas</span>
             </article>
@@ -117,7 +119,7 @@
               </span>
               <div>
                 <p class="metric-card__label">Total de despesas</p>
-                <p class="metric-card__value">R$ 0,00</p>
+                <p class="metric-card__value" id="total-expenses">R$ 0,00</p>
               </div>
               <span class="metric-card__caption">neste mês</span>
             </article>
@@ -133,7 +135,7 @@
             <div class="category-chart" role="img" aria-label="Gráfico de despesas por categoria, sem dados">
               <div class="category-chart__center">
                 <i class="fa-solid fa-leaf" aria-hidden="true"></i>
-                <span>Visão geral</span>
+                <span id="category-chart-amount">R$ 0,00</span>
               </div>
             </div>
             <ul class="category-legend" aria-label="Categorias de despesas">

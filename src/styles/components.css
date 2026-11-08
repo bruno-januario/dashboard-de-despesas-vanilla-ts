@@ -171,6 +171,14 @@
   font-size: 0.76rem;
 }
 
+.field-hint--error {
+  color: #b42318;
+}
+
+.field-hint--success {
+  color: var(--color-brand-strong);
+}
+
 
 
 .metric-grid {
@@ -280,15 +288,7 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: conic-gradient(
-    var(--color-food) 0 14.28%,
-    var(--color-transport) 14.28% 28.56%,
-    var(--color-health) 28.56% 42.84%,
-    var(--color-study) 42.84% 57.12%,
-    var(--color-leisure) 57.12% 71.4%,
-    var(--color-home) 71.4% 85.68%,
-    var(--color-other) 85.68% 100%
-  );
+  background: var(--chart-gradient, var(--color-border));
   position: relative;
 }
 
