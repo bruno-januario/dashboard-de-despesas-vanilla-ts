@@ -184,6 +184,14 @@
   }
 }
 
+@media (max-width: 850px) {
+  .footer {
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
 @media (max-width: 449.99px) {
   .refresh-button span {
     display: none;
