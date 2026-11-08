@@ -714,6 +714,124 @@
 }
 
 
+.expense-form__feedback {
+  grid-column: 1 / -1;
+  min-height: 1em;
+  margin: 0;
+}
+
+
+.expense-card {
+  min-width: 0;
+  padding: 1rem;
+  display: grid;
+  gap: 0.9rem;
+  border: 1px solid var(--color-border);
+  border-radius: 13px;
+  background: var(--color-surface);
+  box-shadow: 0 5px 16px rgba(var(--color-shadow), 0.035);
+  transition: border-color var(--transition), background-color 240ms ease, transform var(--transition);
+}
+
+
+.expense-card--paid {
+  border-color: color-mix(in srgb, var(--color-brand) 30%, var(--color-border));
+}
+
+
+.expense-card__heading,
+.expense-card__details {
+  min-width: 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+
+.expense-card__title {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--color-forest);
+  font-family: "Manrope", sans-serif;
+  font-size: 0.91rem;
+  font-weight: 800;
+}
+
+
+.expense-status {
+  flex: 0 0 auto;
+  padding: 0.28rem 0.48rem;
+  border-radius: 999px;
+  color: var(--color-muted);
+  background: var(--color-surface-soft);
+  font-size: 0.67rem;
+  font-weight: 700;
+}
+
+
+.expense-status--paga {
+  color: var(--color-brand-strong);
+  background: color-mix(in srgb, var(--color-brand) 12%, var(--color-surface));
+}
+
+
+.expense-card__details {
+  align-items: center;
+}
+
+
+.expense-card__category {
+  color: var(--color-muted);
+  font-size: 0.76rem;
+}
+
+
+.expense-card__amount {
+  color: var(--color-forest);
+  font-size: 0.92rem;
+  font-variant-numeric: tabular-nums;
+}
+
+
+.expense-card__toggle {
+  min-height: 36px;
+  padding: 0.45rem 0.6rem;
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  color: var(--color-brand-strong);
+  background: var(--color-page);
+  font-size: 0.72rem;
+  font-weight: 700;
+  transition: border-color var(--transition), background-color var(--transition), transform var(--transition);
+}
+
+
+.expense-card__toggle:hover {
+  border-color: color-mix(in srgb, var(--color-brand) 45%, var(--color-border));
+  background: color-mix(in srgb, var(--color-brand) 9%, var(--color-surface));
+}
+
+
+.expense-card__toggle:active {
+  transform: translateY(1px);
+}
+
+
+.expense-list__error {
+  grid-column: 1 / -1;
+  align-self: center;
+  justify-self: center;
+  max-width: 32rem;
+  color: var(--color-danger, #b42318);
+  text-align: center;
+}
+
 
 .empty-state {
   min-height: 270px;

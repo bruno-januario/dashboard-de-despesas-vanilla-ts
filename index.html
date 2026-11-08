@@ -169,11 +169,18 @@
             <form class="expense-form" id="expense-form">
               <div class="form-field form-field--title">
                 <label for="expense-title">Título da despesa</label>
-                <input id="expense-title" name="title" type="text" placeholder="Ex.: Conta de luz" />
+                <input
+                  id="expense-title"
+                  name="title"
+                  type="text"
+                  placeholder="Ex.: Conta de luz"
+                  maxlength="100"
+                  required
+                />
               </div>
               <div class="form-field">
                 <label for="expense-category">Categoria</label>
-                <select id="expense-category" name="category">
+                <select id="expense-category" name="category" required>
                   <option value="" selected disabled>Escolha uma</option>
                   <option value="Alimentação">Alimentação</option>
                   <option value="Transporte">Transporte</option>
@@ -196,6 +203,7 @@
                     step="0.01"
                     placeholder="0,00"
                     inputmode="decimal"
+                    required
                   />
                 </div>
               </div>
@@ -203,6 +211,7 @@
                 <i class="fa-solid fa-plus" aria-hidden="true"></i>
                 <span>Adicionar despesa</span>
               </button>
+              <p class="field-hint expense-form__feedback" id="expense-feedback" aria-live="polite"></p>
             </form>
           </section>
 
@@ -210,7 +219,11 @@
             <div class="list-summary" aria-live="polite">
               <div class="list-summary__copy">
                 <span class="list-summary__icon" aria-hidden="true"><i class="fa-solid fa-list-ul"></i></span>
-                <p><strong>0 despesas</strong><span class="list-summary__separator">·</span><span>0 em aberto</span></p>
+                <p>
+                  <strong id="expense-count">0 despesas</strong>
+                  <span class="list-summary__separator">·</span>
+                  <span id="open-expense-count">0 em aberto</span>
+                </p>
               </div>
               <button class="button button--quiet refresh-button" type="button">
                 <i class="fa-solid fa-rotate" aria-hidden="true"></i>
