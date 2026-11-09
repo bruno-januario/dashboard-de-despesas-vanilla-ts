@@ -214,7 +214,6 @@
                 <i class="fa-solid fa-plus" aria-hidden="true"></i>
                 <span>Adicionar despesa</span>
               </button>
-              <p class="field-hint expense-form__feedback" id="expense-feedback" aria-live="polite"></p>
             </form>
           </section>
 
@@ -332,7 +331,6 @@
               </div>
             </div>
           </div>
-          <p class="field-hint dialog-feedback" id="edit-dialog-feedback" aria-live="polite"></p>
           <div class="dialog-actions">
             <button class="button button--secondary" type="button" data-close-dialog>Cancelar</button>
             <button class="button button--primary" type="submit">Salvar alterações</button>
@@ -349,7 +347,6 @@
             </button>
           </div>
           <p class="dialog-description" id="delete-dialog-description"></p>
-          <p class="field-hint dialog-feedback" id="delete-dialog-feedback" aria-live="polite"></p>
           <div class="dialog-actions">
             <button class="button button--secondary" type="button" data-close-dialog>Cancelar</button>
             <button class="button button--danger" id="confirm-delete-expense" type="button">Excluir despesa</button>
@@ -370,5 +367,12 @@
         </div>
       </footer>
     </div>
+    <div
+      class="toast-region"
+      id="toast-region"
+      role="status"
+      aria-live="polite"
+      aria-label="Notificações"
+    ></div>
   </body>
 </html>

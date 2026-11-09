@@ -5,7 +5,6 @@ const form = document.querySelector<HTMLFormElement>("#expense-form");
 const titleInput = document.querySelector<HTMLInputElement>("#expense-title");
 const categoryInput = document.querySelector<HTMLSelectElement>("#expense-category");
 const amountInput = document.querySelector<HTMLInputElement>("#expense-amount");
-const feedback = document.querySelector<HTMLParagraphElement>("#expense-feedback");
 const expenseList = document.querySelector<HTMLElement>("#expense-list");
 const expenseCount = document.querySelector<HTMLElement>("#expense-count");
 const openExpenseCount = document.querySelector<HTMLElement>("#open-expense-count");
@@ -22,19 +21,17 @@ const editForm = document.querySelector<HTMLFormElement>("#edit-expense-form");
 const editTitleInput = document.querySelector<HTMLInputElement>("#edit-expense-title");
 const editCategoryInput = document.querySelector<HTMLSelectElement>("#edit-expense-category");
 const editAmountInput = document.querySelector<HTMLInputElement>("#edit-expense-amount");
-const editDialogFeedback = document.querySelector<HTMLParagraphElement>("#edit-dialog-feedback");
 const deleteDialog = document.querySelector<HTMLDialogElement>("#delete-expense-dialog");
 const deleteDescription = document.querySelector<HTMLParagraphElement>("#delete-dialog-description");
-const deleteDialogFeedback = document.querySelector<HTMLParagraphElement>("#delete-dialog-feedback");
 const confirmDeleteButton = document.querySelector<HTMLButtonElement>("#confirm-delete-expense");
+const toastRegion = document.querySelector<HTMLElement>("#toast-region");
 
 if (
-  !form || !titleInput || !categoryInput || !amountInput || !feedback || !expenseList ||
+  !form || !titleInput || !categoryInput || !amountInput || !expenseList ||
   !expenseCount || !openExpenseCount || !expensePagination || !refreshButton || !searchInput || !categoryFilter ||
   !statusFilter || !minimumAmountFilter || !maximumAmountFilter || !filterFeedback ||
   !editDialog || !editForm || !editTitleInput || !editCategoryInput || !editAmountInput ||
-  !editDialogFeedback || !deleteDialog || !deleteDescription || !deleteDialogFeedback ||
-  !confirmDeleteButton
+  !deleteDialog || !deleteDescription || !confirmDeleteButton || !toastRegion
 ) {
   throw new Error("Não foi possível inicializar a lista de despesas.");
 }
@@ -48,8 +45,49 @@ let deletingExpenseId: string | null = null;
 let currentPage = 1;
 const expensesPerPage = 6;
 const visiblePageCount = 5;
+const toastQueue: Array<{ message: string; state: "error" | "success" }> = [];
+let isShowingToast = false;
 
-const setFeedback = (
+const showNextToast = (): void => {
+  const notification = toastQueue.shift();
+  if (!notification) {
+    isShowingToast = false;
+    return;
+  }
+
+  isShowingToast = true;
+  const toast = document.createElement("div");
+  toast.className = `toast toast--${notification.state}`;
+  const icon = document.createElement("i");
+  icon.className = `toast__icon fa-solid ${
+    notification.state === "success" ? "fa-circle-check" : "fa-circle-exclamation"
+  }`;
+  icon.setAttribute("aria-hidden", "true");
+  const message = document.createElement("span");
+  message.className = "toast__message";
+  message.textContent = notification.message;
+  toast.append(icon, message);
+  toastRegion.replaceChildren(toast);
+
+  requestAnimationFrame(() => toast.classList.add("toast--visible"));
+  window.setTimeout(() => {
+    toast.classList.remove("toast--visible");
+    toast.classList.add("toast--leaving");
+    window.setTimeout(() => {
+      toast.remove();
+      showNextToast();
+    }, 240);
+  }, 3200);
+};
+
+const notify = (message: string, state: "error" | "success" = "success"): void => {
+  toastQueue.push({ message, state });
+  if (!isShowingToast) {
+    showNextToast();
+  }
+};
+
+const setFieldFeedback = (
   element: HTMLElement,
   message: string,
   state: "error" | "success" = "success",
@@ -57,6 +95,16 @@ const setFeedback = (
   element.textContent = message;
   element.classList.toggle("field-hint--error", state === "error");
   element.classList.toggle("field-hint--success", state === "success");
+};
+
+const restoreToastRegion = (): void => {
+  const openDialog = document.querySelector<HTMLDialogElement>("dialog[open]");
+  (openDialog ?? document.body).append(toastRegion);
+};
+
+const closeExpenseDialog = (dialog: HTMLDialogElement): void => {
+  document.body.append(toastRegion);
+  dialog.close();
 };
 
 const clearFilters = (): void => {
@@ -295,10 +343,10 @@ const renderExpenses = (): void => {
   let filteredExpenses: Despesa[];
   try {
     filteredExpenses = getFilteredExpenses(data.despesas);
-    setFeedback(filterFeedback, "");
+    setFieldFeedback(filterFeedback, "");
   } catch (error) {
     const message = error instanceof Error ? error.message : "Não foi possível aplicar os filtros.";
-    setFeedback(filterFeedback, message, "error");
+    setFieldFeedback(filterFeedback, message, "error");
     renderPagination(data.despesas.length);
     const firstExpense = (currentPage - 1) * expensesPerPage;
     expenseList.replaceChildren(
@@ -335,7 +383,7 @@ const togglePaymentStatus = (id: string): void => {
     saveFinancialData(data);
   } catch (error) {
     console.error("Falha ao atualizar o estado de pagamento da despesa.", error);
-    setFeedback(feedback, "Não foi possível atualizar o estado da despesa. Tente novamente.", "error");
+    notify("Não foi possível atualizar o estado da despesa. Tente novamente.", "error");
   }
 };
 
@@ -349,17 +397,17 @@ const addExpense = (event: SubmitEvent): void => {
   const amount = amountInput.valueAsNumber;
 
   if (!title) {
-    setFeedback(feedback, "Informe o título da despesa.", "error");
+    notify("Informe o título da despesa.", "error");
     titleInput.focus();
     return;
   }
   if (!isCategoria(category)) {
-    setFeedback(feedback, "Selecione uma categoria válida.", "error");
+    notify("Selecione uma categoria válida.", "error");
     categoryInput.focus();
     return;
   }
   if (!Number.isFinite(amount) || amount <= 0) {
-    setFeedback(feedback, "Informe um valor maior que zero.", "error");
+    notify("Informe um valor maior que zero.", "error");
     amountInput.focus();
     return;
   }
@@ -375,11 +423,11 @@ const addExpense = (event: SubmitEvent): void => {
     };
     saveFinancialData({ ...data, despesas: [...data.despesas, expense] });
     form.reset();
-    setFeedback(feedback, "Despesa adicionada.", "success");
+    notify("Despesa adicionada.");
     titleInput.focus();
   } catch (error) {
     console.error("Falha ao cadastrar a despesa.", error);
-    setFeedback(feedback, "Não foi possível salvar a despesa. Tente novamente.", "error");
+    notify("Não foi possível salvar a despesa. Tente novamente.", "error");
   }
 };
 
@@ -388,7 +436,7 @@ const openEditDialog = (expense: Despesa): void => {
   editTitleInput.value = expense.titulo;
   editCategoryInput.value = expense.categoria;
   editAmountInput.value = String(expense.valor);
-  setFeedback(editDialogFeedback, "");
+  editDialog.append(toastRegion);
   editDialog.showModal();
   editTitleInput.focus();
 };
@@ -400,21 +448,21 @@ const saveExpenseEdits = (event: SubmitEvent): void => {
   const amount = editAmountInput.valueAsNumber;
 
   if (!editingExpenseId) {
-    setFeedback(editDialogFeedback, "Não foi possível identificar a despesa.", "error");
+    notify("Não foi possível identificar a despesa.", "error");
     return;
   }
   if (!title) {
-    setFeedback(editDialogFeedback, "Informe o título da despesa.", "error");
+    notify("Informe o título da despesa.", "error");
     editTitleInput.focus();
     return;
   }
   if (!isCategoria(category)) {
-    setFeedback(editDialogFeedback, "Selecione uma categoria válida.", "error");
+    notify("Selecione uma categoria válida.", "error");
     editCategoryInput.focus();
     return;
   }
   if (!Number.isFinite(amount) || amount <= 0) {
-    setFeedback(editDialogFeedback, "Informe um valor maior que zero.", "error");
+    notify("Informe um valor maior que zero.", "error");
     editAmountInput.focus();
     return;
   }
@@ -429,26 +477,26 @@ const saveExpenseEdits = (event: SubmitEvent): void => {
     expense.categoria = category;
     expense.valor = amount;
     saveFinancialData(data);
-    editDialog.close();
+    closeExpenseDialog(editDialog);
     editingExpenseId = null;
-    setFeedback(feedback, "Despesa atualizada.", "success");
+    notify("Despesa atualizada.");
   } catch (error) {
     console.error("Falha ao editar a despesa.", error);
-    setFeedback(editDialogFeedback, "Não foi possível salvar as alterações. Tente novamente.", "error");
+    notify("Não foi possível salvar as alterações. Tente novamente.", "error");
   }
 };
 
 const openDeleteDialog = (expense: Despesa): void => {
   deletingExpenseId = expense.id;
   deleteDescription.textContent = `A despesa “${expense.titulo}” será removida permanentemente. Esta ação não pode ser desfeita.`;
-  setFeedback(deleteDialogFeedback, "");
+  deleteDialog.append(toastRegion);
   deleteDialog.showModal();
   confirmDeleteButton.focus();
 };
 
 const deleteExpense = (): void => {
   if (!deletingExpenseId) {
-    setFeedback(deleteDialogFeedback, "Não foi possível identificar a despesa.", "error");
+    notify("Não foi possível identificar a despesa.", "error");
     return;
   }
 
@@ -459,21 +507,16 @@ const deleteExpense = (): void => {
       throw new Error("A despesa selecionada não foi encontrada.");
     }
     saveFinancialData({ ...data, despesas: remainingExpenses });
-    deleteDialog.close();
+    closeExpenseDialog(deleteDialog);
     deletingExpenseId = null;
-    setFeedback(feedback, "Despesa excluída.", "success");
+    notify("Despesa excluída.");
   } catch (error) {
     console.error("Falha ao excluir a despesa.", error);
-    setFeedback(deleteDialogFeedback, "Não foi possível excluir a despesa. Tente novamente.", "error");
+    notify("Não foi possível excluir a despesa. Tente novamente.", "error");
   }
 };
 
 form.addEventListener("submit", addExpense);
-form.addEventListener("input", () => {
-  if (feedback.classList.contains("field-hint--error")) {
-    setFeedback(feedback, "");
-  }
-});
 editForm.addEventListener("submit", saveExpenseEdits);
 confirmDeleteButton.addEventListener("click", deleteExpense);
 refreshButton.addEventListener("click", renderExpenses);
@@ -490,13 +533,25 @@ refreshButton.addEventListener("click", renderExpenses);
   }),
 );
 document.querySelectorAll<HTMLButtonElement>("[data-close-dialog]").forEach((button) => {
-  button.addEventListener("click", () => button.closest("dialog")?.close());
+  button.addEventListener("click", () => {
+    const dialog = button.closest("dialog");
+    if (dialog instanceof HTMLDialogElement) {
+      closeExpenseDialog(dialog);
+    }
+  });
 });
 editDialog.addEventListener("close", () => {
+  restoreToastRegion();
   editingExpenseId = null;
 });
 deleteDialog.addEventListener("close", () => {
+  restoreToastRegion();
   deletingExpenseId = null;
+});
+[editDialog, deleteDialog].forEach((dialog) => {
+  dialog.addEventListener("cancel", () => {
+    window.setTimeout(restoreToastRegion, 0);
+  });
 });
 window.addEventListener("finora:data-changed", renderExpenses);
 window.addEventListener("storage", (event) => {

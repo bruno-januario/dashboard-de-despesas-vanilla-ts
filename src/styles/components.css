@@ -179,6 +179,62 @@
   color: var(--color-brand-strong);
 }
 
+.toast-region {
+  position: fixed;
+  z-index: 1000;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  width: fit-content;
+  max-width: min(28rem, calc(100vw - 2rem));
+  display: grid;
+  gap: 0.65rem;
+  pointer-events: none;
+}
+
+.toast {
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.9rem 1rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.7rem;
+  border: 1px solid var(--color-border);
+  border-radius: 14px;
+  color: var(--color-forest);
+  background: var(--color-surface);
+  box-shadow: 0 12px 32px rgba(var(--color-shadow), 0.18);
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.toast--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.toast--leaving {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.toast__icon {
+  flex: 0 0 auto;
+  margin-top: 0.12rem;
+  color: var(--color-brand-strong);
+}
+
+.toast--error .toast__icon {
+  color: #b42318;
+}
+
+.toast__message {
+  min-width: 0;
+  font-size: 0.88rem;
+  font-weight: 600;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
 
 
 .metric-grid {
@@ -812,13 +868,6 @@
 }
 
 
-.expense-form__feedback {
-  grid-column: 1 / -1;
-  min-height: 1em;
-  margin: 0;
-}
-
-
 .expense-card {
   min-width: 0;
   padding: 1rem;
@@ -1011,10 +1060,6 @@
   color: var(--color-muted);
   font-size: 0.9rem;
   line-height: 1.55;
-}
-
-.dialog-feedback {
-  min-height: 1em;
 }
 
 .dialog-actions {
