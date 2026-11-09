@@ -9,6 +9,7 @@ const feedback = document.querySelector<HTMLParagraphElement>("#expense-feedback
 const expenseList = document.querySelector<HTMLElement>("#expense-list");
 const expenseCount = document.querySelector<HTMLElement>("#expense-count");
 const openExpenseCount = document.querySelector<HTMLElement>("#open-expense-count");
+const expensePagination = document.querySelector<HTMLElement>("#expense-pagination");
 const refreshButton = document.querySelector<HTMLButtonElement>(".refresh-button");
 const searchInput = document.querySelector<HTMLInputElement>(".search-field input");
 const categoryFilter = document.querySelector<HTMLSelectElement>("#filter-category");
@@ -29,7 +30,7 @@ const confirmDeleteButton = document.querySelector<HTMLButtonElement>("#confirm-
 
 if (
   !form || !titleInput || !categoryInput || !amountInput || !feedback || !expenseList ||
-  !expenseCount || !openExpenseCount || !refreshButton || !searchInput || !categoryFilter ||
+  !expenseCount || !openExpenseCount || !expensePagination || !refreshButton || !searchInput || !categoryFilter ||
   !statusFilter || !minimumAmountFilter || !maximumAmountFilter || !filterFeedback ||
   !editDialog || !editForm || !editTitleInput || !editCategoryInput || !editAmountInput ||
   !editDialogFeedback || !deleteDialog || !deleteDescription || !deleteDialogFeedback ||
@@ -44,6 +45,9 @@ const currencyFormatter = new Intl.NumberFormat("pt-BR", {
 });
 let editingExpenseId: string | null = null;
 let deletingExpenseId: string | null = null;
+let currentPage = 1;
+const expensesPerPage = 6;
+const visiblePageCount = 5;
 
 const setFeedback = (
   element: HTMLElement,
@@ -61,7 +65,66 @@ const clearFilters = (): void => {
   statusFilter.value = "";
   minimumAmountFilter.value = "";
   maximumAmountFilter.value = "";
+  currentPage = 1;
   renderExpenses();
+};
+
+const createPageButton = (
+  label: string,
+  page: number,
+  accessibleLabel: string,
+  current = false,
+): HTMLButtonElement => {
+  const button = document.createElement("button");
+  button.className = "expense-pagination__button";
+  button.type = "button";
+  if (label === "previous" || label === "next") {
+    const icon = document.createElement("i");
+    icon.className = `fa-solid ${label === "previous" ? "fa-chevron-left" : "fa-chevron-right"}`;
+    icon.setAttribute("aria-hidden", "true");
+    button.append(icon);
+  } else {
+    button.textContent = label;
+  }
+  button.setAttribute("aria-label", accessibleLabel);
+  button.disabled = current;
+  if (current) {
+    button.setAttribute("aria-current", "page");
+  }
+  button.addEventListener("click", () => {
+    currentPage = page;
+    renderExpenses();
+    expenseList.scrollTop = 0;
+  });
+  return button;
+};
+
+const renderPagination = (totalItems: number): void => {
+  const totalPages = Math.max(1, Math.ceil(totalItems / expensesPerPage));
+  currentPage = Math.min(currentPage, Math.max(totalPages, 1));
+  expensePagination.replaceChildren();
+
+  const firstVisiblePage = Math.max(
+    1,
+    Math.min(
+      currentPage - Math.floor(visiblePageCount / 2),
+      totalPages - visiblePageCount + 1,
+    ),
+  );
+  const lastVisiblePage = Math.min(totalPages, firstVisiblePage + visiblePageCount - 1);
+  const previousButton = createPageButton("previous", currentPage - 1, "Página anterior");
+  previousButton.disabled = currentPage === 1;
+  expensePagination.append(previousButton);
+
+  for (let page = firstVisiblePage; page <= lastVisiblePage; page += 1) {
+    expensePagination.append(
+      createPageButton(String(page), page, `Página ${page}`, page === currentPage),
+    );
+  }
+
+  const nextButton = createPageButton("next", currentPage + 1, "Próxima página");
+  nextButton.disabled = currentPage === totalPages;
+  expensePagination.append(nextButton);
 };
 
 const createEmptyState = (filtered: boolean): HTMLElement => {
@@ -214,6 +277,8 @@ const renderExpenses = (): void => {
   } catch (error) {
     console.error("Falha ao carregar as despesas salvas.", error);
     expenseList.replaceChildren();
+    expensePagination.replaceChildren();
+    renderPagination(0);
     expenseList.setAttribute("aria-label", "Não foi possível carregar as despesas salvas.");
     const errorMessage = document.createElement("p");
     errorMessage.className = "expense-list__error";
@@ -234,16 +299,24 @@ const renderExpenses = (): void => {
   } catch (error) {
     const message = error instanceof Error ? error.message : "Não foi possível aplicar os filtros.";
     setFeedback(filterFeedback, message, "error");
-    expenseList.replaceChildren(...data.despesas.map(createExpenseCard));
+    renderPagination(data.despesas.length);
+    const firstExpense = (currentPage - 1) * expensesPerPage;
+    expenseList.replaceChildren(
+      ...data.despesas.slice(firstExpense, firstExpense + expensesPerPage).map(createExpenseCard),
+    );
     expenseList.removeAttribute("aria-label");
     return;
   }
 
+  renderPagination(filteredExpenses.length);
   const content = document.createDocumentFragment();
   if (filteredExpenses.length === 0) {
     content.append(createEmptyState(hasActiveFilters()));
   } else {
-    filteredExpenses.forEach((expense) => content.append(createExpenseCard(expense)));
+    const firstExpense = (currentPage - 1) * expensesPerPage;
+    filteredExpenses
+      .slice(firstExpense, firstExpense + expensesPerPage)
+      .forEach((expense) => content.append(createExpenseCard(expense)));
   }
 
   expenseList.replaceChildren(content);
@@ -405,9 +478,17 @@ editForm.addEventListener("submit", saveExpenseEdits);
 confirmDeleteButton.addEventListener("click", deleteExpense);
 refreshButton.addEventListener("click", renderExpenses);
 [searchInput, minimumAmountFilter, maximumAmountFilter].forEach((input) =>
-  input.addEventListener("input", renderExpenses),
+  input.addEventListener("input", () => {
+    currentPage = 1;
+    renderExpenses();
+  }),
 );
-[categoryFilter, statusFilter].forEach((select) => select.addEventListener("change", renderExpenses));
+[categoryFilter, statusFilter].forEach((select) =>
+  select.addEventListener("change", () => {
+    currentPage = 1;
+    renderExpenses();
+  }),
+);
 document.querySelectorAll<HTMLButtonElement>("[data-close-dialog]").forEach((button) => {
   button.addEventListener("click", () => button.closest("dialog")?.close());
 });

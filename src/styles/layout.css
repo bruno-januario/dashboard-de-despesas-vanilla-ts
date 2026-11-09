@@ -148,7 +148,7 @@
   padding: clamp(1.5rem, 3vw, 2.5rem) 0;
   display: grid;
   grid-template-columns: minmax(270px, 0.34fr) minmax(0, 1fr);
-  align-items: stretch;
+  align-items: start;
   gap: clamp(1.25rem, 2.6vw, 2.4rem);
 }
 

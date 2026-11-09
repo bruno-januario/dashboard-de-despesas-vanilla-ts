@@ -562,7 +562,6 @@
 
 
 .expense-panel {
-  flex: 1;
   padding: clamp(1.15rem, 2vw, 1.55rem);
 }
 
@@ -755,11 +754,50 @@
 
 
 .expense-list {
-  min-height: 270px;
+  height: 28.25rem;
+  min-height: 0;
+  overflow-y: auto;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
   gap: 0.8rem;
+  scrollbar-gutter: stable;
+}
+
+.expense-pagination {
+  padding-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.expense-pagination__button {
+  min-width: 36px;
+  min-height: 36px;
+  padding: 0.4rem;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  color: var(--color-forest);
+  background: var(--color-surface);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.expense-pagination__button[aria-current="page"] {
+  border-color: var(--color-brand);
+  color: #fff;
+  background: var(--color-brand);
+}
+
+.expense-pagination__button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+.expense-pagination__button[aria-current="page"]:disabled {
+  cursor: default;
+  opacity: 1;
 }
 
 

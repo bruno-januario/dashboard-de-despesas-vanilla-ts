@@ -214,7 +214,13 @@
   }
 
   .expense-list {
+    min-height: 0;
+    overflow-y: auto;
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .expense-pagination {
+    flex-wrap: wrap;
   }
 
   .empty-state {
