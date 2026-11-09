@@ -264,7 +264,20 @@
                   <option value="paga">Pagas</option>
                   <option value="em-aberto">Em aberto</option>
                 </select>
+                <div class="filter-amount-group">
+                  <label class="filter-amount">
+                    <span class="sr-only">Valor mínimo</span>
+                    <span aria-hidden="true">R$</span>
+                    <input id="filter-min-amount" name="min-amount" type="number" min="0" step="0.01" placeholder="Valor mín." />
+                  </label>
+                  <label class="filter-amount">
+                    <span class="sr-only">Valor máximo</span>
+                    <span aria-hidden="true">R$</span>
+                    <input id="filter-max-amount" name="max-amount" type="number" min="0" step="0.01" placeholder="Valor máx." />
+                  </label>
+                </div>
               </div>
+              <p class="field-hint filter-feedback" id="filter-feedback" aria-live="polite"></p>
             </div>
 
             <div class="expense-list" id="expense-list" aria-live="polite">
@@ -281,6 +294,64 @@
           </section>
         </main>
       </div>
+
+      <dialog class="app-dialog" id="edit-expense-dialog" aria-labelledby="edit-dialog-title">
+        <form class="dialog-content" id="edit-expense-form">
+          <div class="dialog-heading">
+            <h2 id="edit-dialog-title">Editar despesa</h2>
+            <button class="dialog-close" type="button" data-close-dialog aria-label="Fechar edição">
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+          </div>
+          <div class="dialog-fields">
+            <div class="form-field">
+              <label for="edit-expense-title">Título da despesa</label>
+              <input id="edit-expense-title" name="title" type="text" maxlength="100" required />
+            </div>
+            <div class="form-field">
+              <label for="edit-expense-category">Categoria</label>
+              <select id="edit-expense-category" name="category" required>
+                <option value="Alimentação">Alimentação</option>
+                <option value="Transporte">Transporte</option>
+                <option value="Saúde">Saúde</option>
+                <option value="Estudo">Estudo</option>
+                <option value="Lazer">Lazer</option>
+                <option value="Contas de casa">Contas de casa</option>
+                <option value="Outros">Outros</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="edit-expense-amount">Valor</label>
+              <div class="amount-input">
+                <span aria-hidden="true">R$</span>
+                <input id="edit-expense-amount" name="amount" type="number" min="0.01" step="0.01" required />
+              </div>
+            </div>
+          </div>
+          <p class="field-hint dialog-feedback" id="edit-dialog-feedback" aria-live="polite"></p>
+          <div class="dialog-actions">
+            <button class="button button--secondary" type="button" data-close-dialog>Cancelar</button>
+            <button class="button button--primary" type="submit">Salvar alterações</button>
+          </div>
+        </form>
+      </dialog>
+
+      <dialog class="app-dialog app-dialog--confirm" id="delete-expense-dialog" aria-labelledby="delete-dialog-title">
+        <div class="dialog-content">
+          <div class="dialog-heading">
+            <h2 id="delete-dialog-title">Excluir despesa?</h2>
+            <button class="dialog-close" type="button" data-close-dialog aria-label="Fechar confirmação">
+              <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+            </button>
+          </div>
+          <p class="dialog-description" id="delete-dialog-description"></p>
+          <p class="field-hint dialog-feedback" id="delete-dialog-feedback" aria-live="polite"></p>
+          <div class="dialog-actions">
+            <button class="button button--secondary" type="button" data-close-dialog>Cancelar</button>
+            <button class="button button--danger" id="confirm-delete-expense" type="button">Excluir despesa</button>
+          </div>
+        </div>
+      </dialog>
 
       <footer class="footer">
         <p>Feito com cuidado para você cuidar melhor do seu dinheiro.</p>

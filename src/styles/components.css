@@ -458,7 +458,8 @@
 
 .form-field input,
 .form-field select,
-.filters select {
+.filters select,
+.filter-amount input {
   width: 100%;
   height: 46px;
   padding: 0 0.8rem;
@@ -675,10 +676,58 @@
   font-size: 0.76rem;
 }
 
+.filter-amount-group {
+  width: 232px;
+  flex: 0 0 232px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
+}
+
+.filter-amount {
+  height: 39px;
+  min-width: 112px;
+  padding: 0 0.55rem;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  color: var(--color-muted);
+  background: var(--color-page);
+  font-size: 0.73rem;
+}
+
+.filter-amount:focus-within {
+  border-color: var(--color-brand);
+}
+
+.filter-amount input {
+  height: 100%;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  color: var(--color-forest);
+  background: transparent;
+  font-size: 0.73rem;
+}
+
+.filter-amount input::placeholder {
+  color: var(--color-muted);
+  opacity: 0.85;
+}
+
+.filter-feedback {
+  min-height: 1em;
+  margin: 0.45rem 0 0;
+}
+
 
 
 .search-field {
   width: clamp(150px, 15vw, 205px);
+  flex: 0 0 clamp(150px, 15vw, 205px);
   height: 39px;
   padding: 0 0.7rem;
   display: flex;
@@ -820,6 +869,131 @@
 
 .expense-card__toggle:active {
   transform: translateY(1px);
+}
+
+.expense-card__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.expense-card__action {
+  width: 36px;
+  height: 36px;
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  color: var(--color-muted);
+  background: var(--color-page);
+  transition: border-color var(--transition), color var(--transition), background-color var(--transition);
+}
+
+.expense-card__action:hover {
+  border-color: var(--color-brand);
+  color: var(--color-brand-strong);
+  background: var(--color-surface-soft);
+}
+
+.expense-card__action--danger:hover {
+  border-color: #e8a39c;
+  color: #b42318;
+  background: color-mix(in srgb, #f04438 9%, var(--color-surface));
+}
+
+.app-dialog {
+  width: min(100% - 2rem, 480px);
+  max-width: 480px;
+  max-height: min(90vh, 700px);
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--color-border);
+  border-radius: 18px;
+  color: var(--color-forest);
+  background: var(--color-surface);
+  box-shadow: 0 24px 80px rgba(var(--color-shadow), 0.25);
+}
+
+.app-dialog::backdrop {
+  background: rgba(8, 24, 17, 0.58);
+  backdrop-filter: blur(3px);
+}
+
+.dialog-content {
+  padding: clamp(1.2rem, 4vw, 1.7rem);
+}
+
+.dialog-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.dialog-heading h2 {
+  margin: 0;
+  color: var(--color-forest);
+  font-family: "Manrope", sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.dialog-close {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 9px;
+  color: var(--color-muted);
+  background: var(--color-page);
+}
+
+.dialog-fields {
+  margin-top: 1.2rem;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.dialog-description {
+  margin: 1rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.dialog-feedback {
+  min-height: 1em;
+}
+
+.dialog-actions {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.button--secondary {
+  border-color: var(--color-border);
+  color: var(--color-forest);
+  background: var(--color-page);
+}
+
+.button--secondary:hover {
+  border-color: var(--color-brand);
+  background: var(--color-surface-soft);
+}
+
+.button--danger {
+  color: #fff;
+  background: #b42318;
+}
+
+.button--danger:hover {
+  background: #921d14;
 }
 
 
