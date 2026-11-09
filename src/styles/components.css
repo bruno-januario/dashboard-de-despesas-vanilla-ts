@@ -413,6 +413,13 @@
   line-height: 1.55;
 }
 
+.sidebar-note__attribution {
+  display: block;
+  margin-top: 0.3rem;
+  font-style: normal;
+  text-align: right;
+}
+
 
 
 .add-panel {
@@ -762,6 +769,10 @@
   align-content: start;
   gap: 0.8rem;
   scrollbar-gutter: stable;
+}
+
+.expense-list:has(.empty-state) {
+  align-content: center;
 }
 
 .expense-pagination {
