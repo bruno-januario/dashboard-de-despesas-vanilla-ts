@@ -930,9 +930,26 @@
 
 
 .expense-card__category {
-  color: var(--color-muted);
+  flex: 0 1 auto;
+  max-width: 70%;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--expense-category-color) 70%, var(--color-surface));
+  border-radius: 999px;
+  color: var(--color-forest);
+  background: color-mix(in srgb, var(--expense-category-color) 40%, var(--color-surface));
   font-size: 0.76rem;
+  font-weight: 700;
+  overflow-wrap: anywhere;
 }
+
+
+.expense-card__category--food { --expense-category-color: var(--color-food); }
+.expense-card__category--transport { --expense-category-color: var(--color-transport); }
+.expense-card__category--health { --expense-category-color: var(--color-health); }
+.expense-card__category--study { --expense-category-color: var(--color-study); }
+.expense-card__category--leisure { --expense-category-color: var(--color-leisure); }
+.expense-card__category--home { --expense-category-color: var(--color-home); }
+.expense-card__category--other { --expense-category-color: var(--color-other); }
 
 
 .expense-card__amount {

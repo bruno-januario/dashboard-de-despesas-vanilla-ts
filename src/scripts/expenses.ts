@@ -1,6 +1,16 @@
 import { loadFinancialData, saveFinancialData } from "./storage";
 import { CATEGORIAS, type Categoria, type DadosFinanceiros, type Despesa } from "./types";
 
+const categoryColorClasses: Record<Categoria, string> = {
+  Alimentação: "food",
+  Transporte: "transport",
+  Saúde: "health",
+  Estudo: "study",
+  Lazer: "leisure",
+  "Contas de casa": "home",
+  Outros: "other",
+};
+
 const form = document.querySelector<HTMLFormElement>("#expense-form");
 const titleInput = document.querySelector<HTMLInputElement>("#expense-title");
 const categoryInput = document.querySelector<HTMLSelectElement>("#expense-category");
@@ -244,7 +254,7 @@ const createExpenseCard = (expense: Despesa): HTMLElement => {
   const details = document.createElement("div");
   details.className = "expense-card__details";
   const category = document.createElement("span");
-  category.className = "expense-card__category";
+  category.className = `expense-card__category expense-card__category--${categoryColorClasses[expense.categoria]}`;
   category.textContent = expense.categoria;
   const amount = document.createElement("strong");
   amount.className = "expense-card__amount";
