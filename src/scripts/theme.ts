@@ -6,6 +6,7 @@ if (!themeToggle) {
 }
 
 const themeIcon = themeToggle.querySelector("i");
+const themeColor = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
 
 if (!themeIcon) {
   throw new Error("O ícone do controle de tema não foi encontrado.");
@@ -14,6 +15,7 @@ if (!themeIcon) {
 const setTheme = (theme: "light" | "dark") => {
   document.documentElement.dataset.theme = theme;
   const isDark = theme === "dark";
+  themeColor?.setAttribute("content", isDark ? "#101b17" : "#f4f7f5");
 
   themeToggle.setAttribute("aria-pressed", String(isDark));
   themeToggle.setAttribute("aria-label", `Ativar tema ${isDark ? "claro" : "escuro"}`);
