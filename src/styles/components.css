@@ -1073,6 +1073,7 @@
   color: var(--color-muted);
   font-size: 0.9rem;
   line-height: 1.55;
+  overflow-wrap: anywhere;
 }
 
 .dialog-actions {
