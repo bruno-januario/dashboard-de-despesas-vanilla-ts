@@ -1,0 +1,235 @@
+.startup-splash {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  display: grid;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  place-items: center;
+  background:
+    radial-gradient(ellipse at 50% 43%, color-mix(in srgb, var(--color-brand) 9%, transparent), transparent 38%),
+    var(--color-page);
+  color: var(--color-forest);
+}
+
+.startup-splash[hidden] {
+  display: none;
+}
+
+.startup-splash__content {
+  position: relative;
+  width: min(100% - 2rem, 320px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  animation: startup-arrive 700ms cubic-bezier(0.2, 0.75, 0.25, 1) 100ms both;
+}
+
+.startup-splash__orbit {
+  position: absolute;
+  top: 38px;
+  left: 50%;
+  border: 1px solid color-mix(in srgb, var(--color-brand) 17%, transparent);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.startup-splash__orbit--outer {
+  width: 194px;
+  aspect-ratio: 1;
+  animation: startup-orbit 22s linear infinite;
+}
+
+.startup-splash__orbit--outer::after {
+  position: absolute;
+  top: 22px;
+  left: 24px;
+  width: 7px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-brand);
+  content: "";
+}
+
+.startup-splash__orbit--inner {
+  width: 154px;
+  aspect-ratio: 1;
+  border-style: dashed;
+  opacity: 0.55;
+  transform: translate(-50%, 3%);
+}
+
+.startup-splash__logo {
+  z-index: 1;
+  width: 76px;
+  height: 76px;
+  padding: 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--color-border) 55%, transparent);
+  border-radius: 24px;
+  background: var(--color-surface);
+  box-shadow: 0 12px 34px rgba(var(--color-shadow), 0.12);
+  object-fit: contain;
+  animation: startup-logo 850ms cubic-bezier(0.2, 0.8, 0.2, 1) 160ms both;
+}
+
+.startup-splash__name {
+  margin: 1.7rem 0 0;
+  font-family: "Manrope", sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.075em;
+  line-height: 1.1;
+}
+
+.startup-splash__name span {
+  color: var(--color-brand);
+}
+
+.startup-splash__tagline {
+  margin: 0.5rem 0 0;
+  color: var(--color-muted);
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+}
+
+.startup-splash__progress {
+  position: relative;
+  width: 52px;
+  height: 3px;
+  margin-top: 2rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-brand) 16%, transparent);
+}
+
+.startup-splash__progress::after {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--color-brand);
+  content: "";
+  transform: scaleX(0.36);
+  transform-origin: left;
+  animation: startup-progress 1.25s ease-in-out infinite;
+}
+
+.is-loading .app-shell {
+  visibility: hidden;
+}
+
+.is-ready .app-shell {
+  animation: app-enter 650ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.is-ready .topbar,
+.is-ready .sidebar > *,
+.is-ready .main-content > *,
+.is-ready .footer {
+  animation: section-enter 560ms cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.is-ready .topbar {
+  animation-delay: 80ms;
+}
+
+.is-ready .sidebar > :nth-child(1) {
+  animation-delay: 160ms;
+}
+
+.is-ready .sidebar > :nth-child(2) {
+  animation-delay: 250ms;
+}
+
+.is-ready .sidebar > :nth-child(3) {
+  animation-delay: 340ms;
+}
+
+.is-ready .sidebar > :nth-child(4) {
+  animation-delay: 430ms;
+}
+
+.is-ready .main-content > :nth-child(1) {
+  animation-delay: 520ms;
+}
+
+.is-ready .main-content > :nth-child(2) {
+  animation-delay: 610ms;
+}
+
+.is-ready .footer {
+  animation-delay: 700ms;
+}
+
+.startup-splash--leaving {
+  animation: startup-exit 520ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes startup-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes startup-logo {
+  from {
+    opacity: 0;
+    transform: scale(0.88);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes startup-progress {
+  0% {
+    transform: translateX(-100%) scaleX(0.35);
+  }
+  55% {
+    transform: translateX(25%) scaleX(0.85);
+  }
+  100% {
+    transform: translateX(190%) scaleX(0.45);
+  }
+}
+
+@keyframes startup-orbit {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes startup-exit {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes app-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes section-enter {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
