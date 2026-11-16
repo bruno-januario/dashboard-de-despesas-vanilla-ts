@@ -1,15 +1,11 @@
-
-
 * {
   box-sizing: border-box;
 }
-
 
 html {
   min-width: 320px;
   scroll-behavior: smooth;
 }
-
 
 body {
   min-width: 320px;
@@ -20,11 +16,9 @@ body {
   transition: background-color 240ms ease, color 240ms ease;
 }
 
-
 a {
   color: inherit;
 }
-
 
 .sr-only {
   position: absolute;
@@ -37,14 +31,11 @@ a {
   border: 0;
 }
 
-
 button,
 input,
 select {
   font: inherit;
 }
-
-
 
 button,
 select {
@@ -59,7 +50,6 @@ button {
 button:not(:disabled):active {
   transform: scale(0.96);
 }
-
 
 button:focus-visible,
 a:focus-visible,
