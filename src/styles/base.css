@@ -51,6 +51,14 @@ select {
   cursor: pointer;
 }
 
+button {
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 90ms ease;
+}
+
+button:not(:disabled):active {
+  transform: scale(0.96);
+}
 
 
 button:focus-visible,

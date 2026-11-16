@@ -982,10 +982,6 @@
 }
 
 
-.expense-card__toggle:active {
-  transform: translateY(1px);
-}
-
 .expense-card__actions {
   display: flex;
   align-items: center;
@@ -1002,7 +998,7 @@
   border-radius: 9px;
   color: var(--color-muted);
   background: var(--color-page);
-  transition: border-color var(--transition), color var(--transition), background-color var(--transition);
+  transition: border-color var(--transition), color var(--transition), background-color var(--transition), transform var(--transition);
 }
 
 .expense-card__action:hover {
