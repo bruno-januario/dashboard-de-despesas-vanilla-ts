@@ -6,6 +6,12 @@
   }
 }
 
+@media (min-width: 851px) {
+  .expense-list {
+    height: auto;
+    min-height: 28.25rem;
+  }
+}
 
 @media (max-width: 1050px) {
   .dashboard {
