@@ -65,6 +65,11 @@ button:focus-visible,
 a:focus-visible,
 input:focus-visible,
 select:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--color-brand) 56%, transparent);
+  outline: 3px solid var(--color-brand-strong);
   outline-offset: 3px;
+}
+
+.topbar :focus-visible,
+.footer :focus-visible {
+  outline-color: #fff;
 }

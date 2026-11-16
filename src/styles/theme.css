@@ -10,8 +10,10 @@
 
   --color-brand: #0f9f59;
   --color-brand-strong: #087c45;
+  --color-brand-hover: #066638;
+  --color-on-brand: #fff;
   --color-forest: #1b3b32;
-  --color-muted: #668078;
+  --color-muted: #5c736b;
   --color-page: #f4f7f5;
   --color-surface: #fff;
   --color-surface-soft: #edf6f1;
@@ -36,6 +38,8 @@
 
   --color-brand: #42c982;
   --color-brand-strong: #2dae6c;
+  --color-brand-hover: #42c982;
+  --color-on-brand: #101b17;
   --color-forest: #e1eee7;
   --color-muted: #9ab0a6;
   --color-page: #101b17;

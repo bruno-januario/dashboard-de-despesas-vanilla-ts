@@ -53,8 +53,8 @@
 
 
 .section-heading__icon--filled {
-  color: #fff;
-  background: var(--color-brand);
+  color: var(--color-on-brand);
+  background: var(--color-brand-strong);
   box-shadow: 0 5px 12px rgba(15, 159, 89, 0.22);
 }
 
@@ -99,7 +99,9 @@
 .income-input:focus-within,
 .amount-input:focus-within,
 .search-field:focus-within {
-  border-color: var(--color-brand);
+  border-color: var(--color-brand-strong);
+  outline: 3px solid var(--color-brand-strong);
+  outline-offset: 2px;
 }
 
 
@@ -137,7 +139,7 @@
 .amount-input input::placeholder,
 .search-field input::placeholder {
   color: var(--color-muted);
-  opacity: 0.72;
+  opacity: 1;
 }
 
 
@@ -150,8 +152,8 @@
   place-items: center;
   border: 0;
   border-radius: 9px;
-  color: #fff;
-  background: var(--color-brand);
+  color: var(--color-on-brand);
+  background: var(--color-brand-strong);
   transition: background-color var(--transition), transform var(--transition);
 }
 
@@ -159,7 +161,7 @@
 
 .icon-button:hover,
 .button--primary:hover {
-  background: var(--color-brand-strong);
+  background: var(--color-brand-hover);
   transform: translateY(-1px);
 }
 
@@ -538,7 +540,7 @@
 
 .form-field input::placeholder {
   color: var(--color-muted);
-  opacity: 0.72;
+  opacity: 1;
 }
 
 
@@ -557,7 +559,6 @@
 .form-field select:focus,
 .filters select:focus {
   border-color: var(--color-brand);
-  outline: 3px solid color-mix(in srgb, var(--color-brand) 20%, transparent);
 }
 
 
@@ -611,8 +612,8 @@
 
 .button--primary {
   min-height: 46px;
-  color: #fff;
-  background: var(--color-brand);
+  color: var(--color-on-brand);
+  background: var(--color-brand-strong);
   box-shadow: 0 5px 12px rgba(15, 159, 89, 0.16);
 }
 
@@ -761,7 +762,9 @@
 }
 
 .filter-amount:focus-within {
-  border-color: var(--color-brand);
+  border-color: var(--color-brand-strong);
+  outline: 3px solid var(--color-brand-strong);
+  outline-offset: 2px;
 }
 
 .filter-amount input {
@@ -777,7 +780,7 @@
 
 .filter-amount input::placeholder {
   color: var(--color-muted);
-  opacity: 0.85;
+  opacity: 1;
 }
 
 .filter-feedback {
@@ -852,9 +855,9 @@
 }
 
 .expense-pagination__button[aria-current="page"] {
-  border-color: var(--color-brand);
-  color: #fff;
-  background: var(--color-brand);
+  border-color: var(--color-brand-strong);
+  color: var(--color-on-brand);
+  background: var(--color-brand-strong);
 }
 
 .expense-pagination__button:disabled {
