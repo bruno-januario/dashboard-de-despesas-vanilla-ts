@@ -30,7 +30,6 @@
   --transition: 180ms ease;
 }
 
-
 :root[data-theme="dark"] {
   color-scheme: dark;
   color: #e1eee7;

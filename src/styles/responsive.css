@@ -1,5 +1,3 @@
-
-
 @media (min-width: 1441px) {
   .app-shell {
     box-shadow: 0 0 50px rgba(var(--color-shadow), 0.09);
@@ -75,7 +73,6 @@
     grid-column: 1 / -1;
   }
 }
-
 
 @media (max-width: 760px) {
   .topbar__inner,
@@ -256,7 +253,6 @@
   }
 }
 
-
 @media (max-width: 420px) {
   .topbar__inner,
   .dashboard {
@@ -342,7 +338,6 @@
     gap: 0.6rem;
   }
 }
-
 
 @media (prefers-reduced-motion: reduce) {
   *,

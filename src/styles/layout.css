@@ -1,5 +1,3 @@
-
-
 .app-shell {
   width: min(100%, var(--page-width));
   min-height: 100vh;
@@ -9,8 +7,6 @@
   background: var(--color-page);
 }
 
-
-
 .topbar {
   position: relative;
   overflow: hidden;
@@ -19,8 +15,6 @@
     radial-gradient(ellipse at 86% 0%, rgba(68, 205, 132, 0.32), transparent 35%),
     linear-gradient(112deg, #123f30 0%, #0b5b3b 52%, #0c8b50 100%);
 }
-
-
 
 .topbar::after {
   position: absolute;
@@ -35,8 +29,6 @@
   pointer-events: none;
 }
 
-
-
 .topbar__inner {
   position: relative;
   z-index: 1;
@@ -49,8 +41,6 @@
   gap: 1.5rem;
 }
 
-
-
 .brand {
   display: inline-flex;
   align-items: center;
@@ -59,8 +49,6 @@
   text-decoration: none;
 }
 
-
-
 .brand__logo {
   width: clamp(46px, 5vw, 62px);
   height: clamp(46px, 5vw, 62px);
@@ -68,14 +56,10 @@
   filter: drop-shadow(0 3px 7px rgba(0, 0, 0, 0.14));
 }
 
-
-
 .brand__copy {
   display: grid;
   gap: 0.1rem;
 }
-
-
 
 .brand__name {
   font-family: "Manrope", sans-serif;
@@ -85,13 +69,9 @@
   line-height: 1;
 }
 
-
-
 .brand__period {
   color: #8be2a9;
 }
-
-
 
 .brand__tagline {
   color: rgba(255, 255, 255, 0.78);
@@ -99,22 +79,16 @@
   letter-spacing: 0.01em;
 }
 
-
-
 .topbar__actions {
   display: flex;
   align-items: center;
   gap: clamp(1rem, 3vw, 2.25rem);
 }
 
-
-
 .topbar__note {
   color: rgba(255, 255, 255, 0.76);
   font-size: 0.9rem;
 }
-
-
 
 .theme-toggle {
   min-height: 42px;
@@ -131,15 +105,11 @@
   transition: background-color var(--transition), border-color var(--transition), transform var(--transition);
 }
 
-
-
 .theme-toggle:hover {
   border-color: rgba(255, 255, 255, 0.5);
   background: rgba(255, 255, 255, 0.18);
   transform: translateY(-1px);
 }
-
-
 
 .dashboard {
   flex: 1;
@@ -152,8 +122,6 @@
   gap: clamp(1.25rem, 2.6vw, 2.4rem);
 }
 
-
-
 .sidebar,
 .main-content {
   min-width: 0;
@@ -162,13 +130,9 @@
   gap: 1.15rem;
 }
 
-
-
 .main-content {
   gap: 1.35rem;
 }
-
-
 
 .footer {
   min-height: 70px;
@@ -187,13 +151,9 @@
   transition: background 240ms ease, border-color 240ms ease;
 }
 
-
-
 .footer p {
   margin: 0;
 }
-
-
 
 .footer__author {
   display: flex;
@@ -201,13 +161,9 @@
   gap: 0.8rem;
 }
 
-
-
 .footer__author strong {
   color: #fff;
 }
-
-
 
 .footer__author a {
   width: 30px;
@@ -220,8 +176,6 @@
   text-decoration: none;
   transition: color var(--transition), background-color var(--transition), border-color var(--transition);
 }
-
-
 
 .footer__author a:hover {
   border-color: rgba(255, 255, 255, 0.65);
