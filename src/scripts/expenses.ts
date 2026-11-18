@@ -434,7 +434,6 @@ const addExpense = (event: SubmitEvent): void => {
     saveFinancialData({ ...data, despesas: [...data.despesas, expense] });
     form.reset();
     notify("Despesa adicionada.");
-    titleInput.focus();
   } catch (error) {
     console.error("Falha ao cadastrar a despesa.", error);
     notify("Não foi possível salvar a despesa. Tente novamente.", "error");
